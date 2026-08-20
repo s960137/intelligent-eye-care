@@ -1,0 +1,16 @@
+{
+  "name": "ai-eye",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Archived Intelligent Eye Care web prototype",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

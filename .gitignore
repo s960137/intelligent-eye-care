@@ -1,0 +1,19 @@
+node_modules/
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local models and generated output
+shape_predictor_68_face_landmarks.dat
+*.dat.bz2
+blink-count.png
+
+# The demo creates this file locally. Do not commit patient or user data.
+web/data.json

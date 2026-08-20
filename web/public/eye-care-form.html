@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>眼睛照護表單｜智慧 EYE 護</title>
+  <link rel="stylesheet" href="eyestyle.css">
+</head>
+<body>
+  <main>
+    <h1>眼睛照護表單</h1>
+    <p class="notice">研究展示介面。資料只儲存在目前瀏覽器的 localStorage；請勿輸入真實敏感資料。</p>
+
+    <form id="care-form">
+      <h2>個人基本資料</h2>
+      <div class="field-grid">
+        <div class="field"><label for="name">姓名</label><input id="name" name="姓名"></div>
+        <div class="field"><label for="age">年齡</label><input id="age" name="年齡" inputmode="numeric"></div>
+      </div>
+
+      <h2>眼睛健康歷史</h2>
+      <div class="field-grid">
+        <div class="field"><label for="family-history">眼睛疾病家族史</label><textarea id="family-history" name="眼睛疾病家族史"></textarea></div>
+        <div class="field"><label for="eye-surgery">曾經的眼睛手術或治療</label><textarea id="eye-surgery" name="眼睛手術或治療"></textarea></div>
+      </div>
+
+      <h2>目前視力與日常用眼</h2>
+      <div class="field-grid">
+        <div class="field"><label for="myopia">近視度數</label><input id="myopia" name="近視度數"></div>
+        <div class="field"><label for="astigmatism">散光度數</label><input id="astigmatism" name="散光度數"></div>
+        <div class="field"><label for="device-usage">電子產品使用時間</label><textarea id="device-usage" name="電子產品使用時間"></textarea></div>
+        <div class="field"><label for="lighting">閱讀或工作照明</label><textarea id="lighting" name="閱讀或工作照明"></textarea></div>
+      </div>
+
+      <h2>建議與追蹤</h2>
+      <div class="field-grid">
+        <div class="field"><label for="diagnosis">上一次眼科診斷</label><input id="diagnosis" name="上一次眼科診斷"></div>
+        <div class="field"><label for="advice">眼科醫師建議</label><textarea id="advice" name="眼科醫師建議"></textarea></div>
+      </div>
+
+      <div class="actions">
+        <button type="submit">儲存並預覽</button>
+        <button type="button" class="secondary" id="clear-button">清除本機資料</button>
+        <a class="button-link secondary" href="eye-diary.html">返回用眼日記</a>
+      </div>
+    </form>
+
+    <section id="saved-data" aria-live="polite"></section>
+  </main>
+
+  <script>
+    const storageKey = 'intelligentEyeCareFormData';
+    const form = document.getElementById('care-form');
+    const output = document.getElementById('saved-data');
+
+    function displayData(data) {
+      if (!data) {
+        output.replaceChildren();
+        return;
+      }
+
+      const table = document.createElement('table');
+      const tbody = document.createElement('tbody');
+      Object.entries(data).forEach(([label, value]) => {
+        const row = document.createElement('tr');
+        const heading = document.createElement('th');
+        const cell = document.createElement('td');
+        heading.textContent = label;
+        cell.textContent = value || '未填寫';
+        row.append(heading, cell);
+        tbody.append(row);
+      });
+      table.append(tbody);
+      output.replaceChildren(table);
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+      localStorage.setItem(storageKey, JSON.stringify(data));
+      displayData(data);
+    });
+
+    document.getElementById('clear-button').addEventListener('click', () => {
+      localStorage.removeItem(storageKey);
+      form.reset();
+      displayData(null);
+    });
+
+    const saved = localStorage.getItem(storageKey);
+    if (saved) {
+      displayData(JSON.parse(saved));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>用眼日記｜智慧 EYE 護</title>
+  <link rel="stylesheet" href="eyestyle.css">
+</head>
+<body>
+  <main>
+    <h1>用眼日記記錄表</h1>
+    <p class="notice">本頁只在瀏覽器中預覽輸入內容，不會送出到伺服器。</p>
+
+    <form id="eye-form">
+      <div class="field-grid">
+        <div class="field">
+          <label for="strabismus">斜視情況</label>
+          <input id="strabismus" name="斜視情況" placeholder="例如：無明顯異常">
+        </div>
+        <div class="field">
+          <label for="squinting">瞇眼情況</label>
+          <input id="squinting" name="瞇眼情況" placeholder="例如：偶爾">
+        </div>
+        <div class="field">
+          <label for="viewing-distance">用眼距離</label>
+          <input id="viewing-distance" name="用眼距離" placeholder="例如：30 cm">
+        </div>
+        <div class="field">
+          <label for="corrected-distance">矯正距離</label>
+          <input id="corrected-distance" name="矯正距離" placeholder="例如：40 cm">
+        </div>
+        <div class="field">
+          <label for="screen-time">用眼時間</label>
+          <input id="screen-time" name="用眼時間" placeholder="例如：2 小時">
+        </div>
+        <div class="field">
+          <label for="record-date">記錄日期</label>
+          <input type="date" id="record-date" name="記錄日期">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit">預覽資料</button>
+        <a class="button-link secondary" href="eye-care-form.html">完整照護表單</a>
+        <a class="button-link secondary" href="index.html">返回登入頁</a>
+      </div>
+    </form>
+
+    <section id="preview" aria-live="polite"></section>
+  </main>
+
+  <script>
+    document.getElementById('eye-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const preview = document.getElementById('preview');
+      const table = document.createElement('table');
+      const tbody = document.createElement('tbody');
+
+      for (const [label, value] of new FormData(event.currentTarget).entries()) {
+        const row = document.createElement('tr');
+        const heading = document.createElement('th');
+        const cell = document.createElement('td');
+        heading.textContent = label;
+        cell.textContent = value || '未填寫';
+        row.append(heading, cell);
+        tbody.append(row);
+      }
+
+      table.append(tbody);
+      preview.replaceChildren(table);
+    });
+  </script>
+</body>
+</html>

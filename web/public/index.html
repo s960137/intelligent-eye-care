@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>智慧 EYE 護</title>
+  <link rel="stylesheet" href="eyestyle.css">
+</head>
+<body>
+  <main>
+    <h1>智慧 EYE 護</h1>
+    <p class="notice">研究展示介面。請勿輸入真實身分證字號或敏感醫療資料。</p>
+
+    <form id="patient-form" autocomplete="off">
+      <div class="field-grid">
+        <div class="field">
+          <label for="user-id">使用者 ID</label>
+          <input id="user-id" name="userID" maxlength="64" required>
+        </div>
+        <div class="field">
+          <label for="user-name">使用者姓名</label>
+          <input id="user-name" name="userName" maxlength="100" required>
+        </div>
+        <div class="field">
+          <label for="gender">性別</label>
+          <select id="gender" name="gender">
+            <option value="male">男性</option>
+            <option value="female">女性</option>
+            <option value="other">其他／不提供</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="user-dob">使用者生日</label>
+          <input type="date" id="user-dob" name="userDOB" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="registered-patients">已註冊名單</label>
+        <select id="registered-patients" aria-label="已註冊使用者">
+          <option value="">尚無資料</option>
+        </select>
+      </div>
+
+      <div class="actions">
+        <button type="submit">註冊</button>
+        <button type="button" class="secondary" id="login-button">進入用眼日記</button>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('patient-form');
+    const patientSelect = document.getElementById('registered-patients');
+
+    async function updateRegisteredPatients() {
+      try {
+        const response = await fetch('/patients');
+        const patients = await response.json();
+        patientSelect.replaceChildren();
+
+        if (patients.length === 0) {
+          patientSelect.add(new Option('尚無資料', ''));
+          return;
+        }
+
+        patients.forEach((patient) => {
+          patientSelect.add(new Option(patient.userName, patient.userID));
+        });
+      } catch (error) {
+        console.error('無法取得註冊名單:', error);
+      }
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const payload = Object.fromEntries(new FormData(form));
+
+      try {
+        const response = await fetch('/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.message || '註冊失敗');
+        }
+
+        alert(result.message);
+        await updateRegisteredPatients();
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+
+    document.getElementById('login-button').addEventListener('click', () => {
+      window.location.href = 'eye-diary.html';
+    });
+
+    updateRegisteredPatients();
+  </script>
+</body>
+</html>
