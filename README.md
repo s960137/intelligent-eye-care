@@ -17,6 +17,32 @@ An archived research prototype for monitoring blink frequency and screen-related
 
 ![EAR formula](docs/images/ear-formula.png)
 
+## Project showcase / 專案展示
+
+### 1. EAR threshold detection / 閾值判斷
+
+![Open and closed eye landmarks used for threshold detection](docs/images/threshold-detection.png)
+
+Six landmarks around the eye are used to calculate the Eye Aspect Ratio (EAR). Comparing the EAR with a configured threshold distinguishes an open eye from a closed-eye frame and provides the basis for blink counting.
+
+### 2. Blink record chart / 眨眼紀錄圖表
+
+![Cumulative blink count over time](docs/images/blink-record-chart.png)
+
+The step chart records the cumulative number of detected blinks over time. Each upward step represents a completed blink after the eye reopens.
+
+### 3. Eye-use diary / 用眼日記表
+
+![Eye-use diary form and record confirmation](docs/images/eye-diary-form.png)
+
+The diary prototype records eye condition, blink status, viewing and correction distances, screen-use duration, and the record date, then presents the submitted values for confirmation.
+
+### 4. Eye-care questionnaire / 眼睛照護表單
+
+![Eye-care questionnaire](docs/images/eye-care-form.png)
+
+The questionnaire organizes basic information, eye-health history, current vision, daily device and lighting habits, and clinical follow-up notes. It demonstrates the broader eye-care record workflow paired with blink monitoring.
+
 ## Repository layout
 
 ```text
