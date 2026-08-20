@@ -2,7 +2,7 @@
 
 An archived research prototype for monitoring blink frequency and screen-related eye-care habits. The project combines a Dlib/OpenCV blink monitor, an eye-care diary web prototype, presentation materials, a report, sample measurements, and a recorded demonstration.
 
-> 這是一份研究與展示用途的封存專案，不是醫療器材，也不能取代專業診斷或治療。
+> 這是研究與展示的醫工日專案，不能取代診斷或治療
 
 ![Blink detection demo](docs/images/program-running.png)
 
