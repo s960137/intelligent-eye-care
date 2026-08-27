@@ -18,6 +18,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 See the current license text in the [PyImageSearch FAQ](https://pyimagesearch.com/faqs/).
 
+## MediaPipe Tasks Vision
+
+The static browser demo loads the `@mediapipe/tasks-vision` JavaScript package and Google's Face Landmarker model bundle at runtime. MediaPipe source code is provided by Google under the Apache License 2.0. See the [MediaPipe repository](https://github.com/google-ai-edge/mediapipe), the [Face Landmarker web guide](https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker/web_js), and the applicable model documentation and terms before redistribution or commercial use.
+
+The package is delivered through [jsDelivr](https://www.jsdelivr.com/) when the demo loads. Camera frames remain in the browser and are not intentionally transmitted to these asset hosts by the project code.
+
 ## Dlib 68-point landmark model
 
 The model file is not distributed in this repository. Dlib states that its downloadable 68-point model was trained on the iBUG 300-W dataset and that the dataset license excludes commercial use. See Dlib's [official landmark example](https://www.dlib.net/face_landmark_detection_ex.cpp.html) before downloading or using the model.
