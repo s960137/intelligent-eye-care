@@ -2,23 +2,6 @@
 
 An archived research prototype for monitoring blink frequency and screen-related eye-care habits. The project combines a Dlib/OpenCV blink monitor, an eye-care diary web prototype, presentation materials, a report, sample measurements, and a recorded demonstration.
 
-> # 這是研究與展示的醫工日專案，尚未串接資料庫，問卷與表單為展示用
-> ! 不能取代診斷與治療
-
-![Blink detection demo](docs/images/program-running.png)
-
-## What it does
-
-- Detects a face and 68 facial landmarks with Dlib.
-- Uses six landmarks around each eye to calculate the Eye Aspect Ratio (EAR).
-- Counts one blink after the eyes reopen following a configurable number of closed-eye frames.
-- Reports the running blink count and the number of blinks in the most recent minute.
-- Optionally saves a blink-count chart when the program exits.
-- Includes a no-database browser demo with an anonymous questionnaire, personal EAR calibration, live blink count, and session summary.
-- Provides a Node.js / Express prototype for local user registration and eye-care diary entries.
-
-![EAR formula](docs/images/ear-formula.png)
-
 ## Try the browser demo
 
 [Open the live Intelligent Eye Care demo](https://s960137.github.io/intelligent-eye-care/)
@@ -37,6 +20,26 @@ python -m http.server 8000 --directory demo
 ```
 
 Then open <http://localhost:8000>.
+
+
+> # 這是研究與展示的醫工日專案，尚未串接資料庫，問卷與表單為展示用
+> ! 不能取代診斷與治療
+
+![Blink detection demo](docs/images/program-running.png)
+
+## What it does
+
+- Detects a face and 68 facial landmarks with Dlib.
+- Uses six landmarks around each eye to calculate the Eye Aspect Ratio (EAR).
+- Counts one blink after the eyes reopen following a configurable number of closed-eye frames.
+- Reports the running blink count and the number of blinks in the most recent minute.
+- Optionally saves a blink-count chart when the program exits.
+- Includes a no-database browser demo with an anonymous questionnaire, personal EAR calibration, live blink count, and session summary.
+- Provides a Node.js / Express prototype for local user registration and eye-care diary entries.
+
+![EAR formula](docs/images/ear-formula.png)
+
+
 
 ## Project showcase / 專案展示
 
