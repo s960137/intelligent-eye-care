@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="智慧 EYE 護瀏覽器眨眼紀錄研究展示">
+  <title>眨眼紀錄 Demo｜智慧 EYE 護</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">INTELLIGENT EYE CARE</p>
+        <h1>眨眼紀錄 Demo</h1>
+        <p class="lede">填寫一份匿名用眼問卷，校正睜眼狀態後，即可在瀏覽器內查看 EAR 與眨眼紀錄。</p>
+      </div>
+      <span class="demo-badge">Browser demo</span>
+    </header>
+
+    <aside class="privacy-card" aria-label="隱私說明">
+      <strong>影像不會上傳</strong>
+      <span>鏡頭畫面與問卷只在目前頁面中處理；沒有資料庫、不錄影，也不儲存個人資料。</span>
+    </aside>
+
+    <ol class="steps" aria-label="Demo 步驟">
+      <li class="is-active" data-step="1"><span>1</span>匿名問卷</li>
+      <li data-step="2"><span>2</span>鏡頭偵測</li>
+      <li data-step="3"><span>3</span>本次摘要</li>
+    </ol>
+
+    <section class="panel" id="questionnaire-section">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">STEP 1</p>
+          <h2>開始前的簡短問卷</h2>
+        </div>
+        <p>不詢問姓名、生日或病歷。</p>
+      </div>
+
+      <form id="questionnaire-form">
+        <div class="form-grid">
+          <label>
+            <span>每天使用螢幕時間</span>
+            <select name="screenTime" required>
+              <option value="">請選擇</option>
+              <option>少於 2 小時</option>
+              <option>2–4 小時</option>
+              <option>4–8 小時</option>
+              <option>超過 8 小時</option>
+            </select>
+          </label>
+
+          <label>
+            <span>近期眼睛乾澀頻率</span>
+            <select name="dryness" required>
+              <option value="">請選擇</option>
+              <option>幾乎沒有</option>
+              <option>偶爾</option>
+              <option>經常</option>
+              <option>幾乎每天</option>
+            </select>
+          </label>
+
+          <label>
+            <span>目前視力輔具</span>
+            <select name="visionAid" required>
+              <option value="">請選擇</option>
+              <option>沒有</option>
+              <option>眼鏡</option>
+              <option>隱形眼鏡</option>
+              <option>其他</option>
+            </select>
+          </label>
+
+          <label>
+            <span>使用螢幕時的休息習慣</span>
+            <select name="breakHabit" required>
+              <option value="">請選擇</option>
+              <option>約每 20 分鐘休息</option>
+              <option>約每小時休息</option>
+              <option>想到才休息</option>
+              <option>幾乎不休息</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="consent-row">
+          <input type="checkbox" name="consent" required>
+          <span>我了解這是研究展示，不是醫療器材；按下「進入 Demo」不會立即開啟鏡頭。</span>
+        </label>
+
+        <div class="actions">
+          <button class="primary" type="submit">進入 Demo</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel" id="monitor-section" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">STEP 2</p>
+          <h2>即時眨眼紀錄</h2>
+        </div>
+        <p id="questionnaire-summary"></p>
+      </div>
+
+      <div class="camera-layout">
+        <div class="camera-card">
+          <div class="camera-stage" id="camera-stage">
+            <video id="camera" muted playsinline></video>
+            <canvas id="overlay" aria-hidden="true"></canvas>
+            <div class="camera-placeholder" id="camera-placeholder">
+              <span class="camera-icon" aria-hidden="true">◉</span>
+              <strong>鏡頭尚未開啟</strong>
+              <span>按下方按鈕後，瀏覽器才會詢問鏡頭權限。</span>
+            </div>
+          </div>
+
+          <div class="camera-status" aria-live="polite">
+            <span class="status-dot" id="status-dot"></span>
+            <span id="status-text">等待開始</span>
+          </div>
+
+          <div class="calibration" id="calibration" hidden>
+            <div class="calibration-copy">
+              <strong>校正睜眼 EAR</strong>
+              <span id="calibration-label">請自然睜眼並看向鏡頭</span>
+            </div>
+            <progress id="calibration-progress" max="100" value="0">0%</progress>
+          </div>
+
+          <div class="actions camera-actions">
+            <button class="primary" id="start-button" type="button">開啟鏡頭並開始</button>
+            <button class="danger" id="stop-button" type="button" disabled>停止並查看摘要</button>
+            <button class="ghost" id="restart-button" type="button">重填問卷</button>
+          </div>
+        </div>
+
+        <div class="metric-grid" aria-label="即時偵測數值">
+          <article class="metric-card featured">
+            <span>眨眼次數</span>
+            <strong id="blink-count">0</strong>
+            <small>本次工作階段</small>
+          </article>
+          <article class="metric-card">
+            <span>目前 EAR</span>
+            <strong id="ear-value">—</strong>
+            <small id="eye-state">尚未偵測</small>
+          </article>
+          <article class="metric-card">
+            <span>個人閾值</span>
+            <strong id="threshold-value">—</strong>
+            <small>校正後自動設定</small>
+          </article>
+          <article class="metric-card">
+            <span>估算 BPM</span>
+            <strong id="blink-rate">0.0</strong>
+            <small>每分鐘眨眼次數</small>
+          </article>
+          <article class="metric-card full-width">
+            <span>已記錄時間</span>
+            <strong id="session-time">00:00</strong>
+          </article>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div>
+          <h3>眨眼累積紀錄</h3>
+          <p>每一階上升代表偵測到一次完整眨眼。</p>
+        </div>
+        <canvas id="blink-chart" width="900" height="300" aria-label="眨眼累積紀錄圖"></canvas>
+      </div>
+    </section>
+
+    <section class="panel summary-panel" id="summary-section" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">STEP 3</p>
+          <h2>本次紀錄摘要</h2>
+        </div>
+        <p>關閉或重新整理頁面後，資料即消失。</p>
+      </div>
+
+      <div class="summary-grid">
+        <article><span>眨眼總數</span><strong id="summary-blinks">0</strong></article>
+        <article><span>平均 BPM</span><strong id="summary-rate">0.0</strong></article>
+        <article><span>記錄時間</span><strong id="summary-duration">00:00</strong></article>
+      </div>
+
+      <div class="care-tip" id="care-tip">
+        <strong>護眼提醒</strong>
+        <p>記得定時眨眼、補充水分，並採用 20-20-20 原則讓眼睛休息。</p>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="new-session-button" type="button">使用相同問卷再測一次</button>
+        <button class="ghost" id="new-questionnaire-button" type="button">重新填寫問卷</button>
+      </div>
+    </section>
+
+    <noscript>此 Demo 需要啟用 JavaScript 才能執行。</noscript>
+
+    <footer>
+      <p>研究與展示用途，結果會受到光線、鏡頭角度、眼鏡反光與裝置效能影響，不能取代醫療診斷或治療。</p>
+      <a href="https://github.com/s960137/intelligent-eye-care">查看 GitHub 原始碼</a>
+    </footer>
+  </main>
+
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>

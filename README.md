@@ -14,9 +14,29 @@ An archived research prototype for monitoring blink frequency and screen-related
 - Counts one blink after the eyes reopen following a configurable number of closed-eye frames.
 - Reports the running blink count and the number of blinks in the most recent minute.
 - Optionally saves a blink-count chart when the program exits.
+- Includes a no-database browser demo with an anonymous questionnaire, personal EAR calibration, live blink count, and session summary.
 - Provides a Node.js / Express prototype for local user registration and eye-care diary entries.
 
 ![EAR formula](docs/images/ear-formula.png)
+
+## Try the browser demo
+
+[Open the live Intelligent Eye Care demo](https://s960137.github.io/intelligent-eye-care/)
+
+The demo is a static GitHub Pages site. It asks for a short anonymous eye-use questionnaire before requesting camera permission, calibrates an open-eye EAR threshold, and then displays the live EAR, blink count, estimated blinks per minute, and a cumulative chart.
+
+- Camera frames are processed in the browser and are not recorded or uploaded by this project.
+- Questionnaire answers remain in page memory only and disappear when the page is closed or refreshed.
+- The page downloads the MediaPipe Tasks Vision library from jsDelivr and Google's Face Landmarker model at runtime.
+- Results vary with lighting, camera angle, glasses reflections, and device performance. This is a research demonstration, not a medical device.
+
+To run it locally, serve the directory instead of opening the HTML file directly:
+
+```bash
+python -m http.server 8000 --directory demo
+```
+
+Then open <http://localhost:8000>.
 
 ## Project showcase / 專案展示
 
@@ -50,6 +70,7 @@ The questionnaire organizes basic information, eye-health history, current visio
 .
 ├── archive/original/       # Original 2024 prototype scripts
 ├── data/                   # Sample head-angle measurements
+├── demo/                   # Static questionnaire and webcam blink demo
 ├── docs/                   # Presentation, report, video, and images
 ├── references/             # Research references
 ├── src/                    # Cleaned and testable blink monitor
@@ -109,13 +130,15 @@ Then open <http://localhost:3000>. The server creates `web/data.json` locally wh
 
 ```bash
 python -m unittest discover -s tests -v
+node --test demo/tests/blink-core.test.mjs
 ```
 
-The tests cover EAR/MAR calculations and the blink state transition without requiring a webcam.
+The tests cover the Python EAR/MAR calculations and state transitions plus the browser demo's EAR calibration, blink state, and rate estimation without requiring a webcam.
 
 ## Privacy and publication notes
 
 - Do not commit real names, identity numbers, dates of birth, phone numbers, medical histories, or other health-related data.
+- The browser demo does not send questionnaire answers or camera frames to this project's server; third-party runtime assets are still fetched over the network.
 - `web/data.example.json` contains fictional data only.
 - The included face images and video should be published only with the depicted participants' permission.
 - Third-party research PDFs are intentionally not redistributed; citations are listed in [references/README.md](references/README.md).
