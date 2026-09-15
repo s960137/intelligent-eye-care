@@ -156,3 +156,9 @@ The presentation reports a strabismus-recognition accuracy of 96.34% and notes r
 The EAR approach follows Soukupová and Čech (2016). The archived prototype also adapts code from Adrian Rosebrock's PyImageSearch blink-detection tutorial. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [references/README.md](references/README.md).
 
 No project-wide open-source license has been selected. Unless a license is added by the project owner, the original project code and media remain under the owner's default copyright; third-party components remain under their respective terms.
+
+-- Author
+
+徐良慶 (Jasper Hsu)
+
+中原大學 生物醫學工程所 (Dept. of Biomedical Engineering, CYCU) | T&T 803 Lab
